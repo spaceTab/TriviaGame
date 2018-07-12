@@ -1,13 +1,14 @@
 /*Triva game logic */
 $(function () {
 
-    var _this = this;           
+    var _t = this;       
 
-    var quiz = [   //Game questions ands answers (True/False format)
+    //Game questions ands answers (True/False format)
+    var quiz = [   
         {
             question:  "What does Jon Snow know?",
-            answer:    "Jon Snow knows nothing",
-            incorrect: "Jon Snow knows theoretical physics"
+            answer:    ["Jon Snow knows nothing "," Jon Snow knows theoretical physics"],
+            correct:   "Jon Snow Knows nothing"
             //img
         }, {
             question:  "What's Sansa Starks favorite thing?",
@@ -45,39 +46,83 @@ $(function () {
         }];
     
 
-        //Question possibilities, incorrect, correct, and unanswered
+    //Question possibilities, incorrect, correct, and unanswered
     var incorrectAns = 0;
     var correctAns   = 0;
     var unanswered   = 0;
+    var currQuestion = 0;
 
+    //variables for timer--> meaningful variable names maybe hardest part of coding
     var time = 20;
     var counter;
     var timeStart = false;
     
-    var chosenQuestion = [];
+    for ( var i = 0; i < quiz.length; i++ ){
+        console.log(quiz[i]);
+        console.log(this[i]);
+    }
 
-    console.log(quiz[chosenQuestion]._this.question)
     
     $('.answers').hide();
     $('.questions').hide();
     $('.reset').hide();
     
+    //conditional to check if time is started - Sets time.
     var begin_timer = function() {
-        if (timeStart != true){
+        if ( timeStart != true ){
             counter = setInterval(count_down, 1000);
             timeStart = true;
         }
     };
 
-    function count_down() {
-        $('.timer').html('<h2> time Remaining: ' + time + '</h2>');
+    //begins time counter.
+    var count_down = function() {
+        $('.timer').html('<h2> Time Remaining: ' + time + '</h2>');
         time--;
         console.log(time);
-    }
-   // begin_timer();
-    count_down();
 
+        if ( time < 0 ) {
+           unanswered++;
+           timer_stop();
+        }
+    };
+
+    //clears time interval -> makes changes to HTML   
+    var timer_stop = function() {
+        !timeStart;
+        clearInterval(counter);
+        $('.timer').html(' <h2> You\'re not a \n stable Genius </h2>');        
+    }
+
+    var begin_quiz = function() {
+        $('.start').on('click', function(){
+            console.log( 'button clicked -> Timer begins');
+            begin_timer();
+            $('.timer').html('<h2> Time Remaining: ' + time + '</h2>');
+        });
+        }
+// begin_quiz();
+// begin_timer();
+// count_down();
+
+    //DISREGARD -> Trying to see how to pull from quiz. 
+    console.log( quiz[currQuestion].question );
+    console.log( quiz[currQuestion].answer );
     
+    var get_question = function() {
+        $('.question').html(quiz[currQuestion].question);
+        
+        var answer = quiz[currQuestion].answer;
+
+        for ( var i=0; i <= answer.length; i++ ){
+            console.log(answer[i]);
+
+            var addAnswer = $('<div>');
+            addAnswer.text(answer[i])
+            //$('.answer').html(quiz[currQuestion].answer);
+            $('.answer').append(addAnswer);
+        }
+    }();
     
 
 

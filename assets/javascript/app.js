@@ -3,50 +3,54 @@ $(function () {
 
     var _t = this;       
 
-    //Game questions ands answers (True/False format)
+    //Game questions ands answers (multichoice format)
     var quiz = [   
         {
             question:  "What does Jon Snow know?",
             answer:    ["Jon Snow knows nothing "," Jon Snow knows theoretical physics"],
-            correct:   "Jon Snow Knows nothing"
+            correct:   0
             //img
         }, {
             question:  "What's Sansa Starks favorite thing?",
-            answer:    "Lemon Cakes, tasty Lemon Cakes!",
-            incorrect: "Being married off to psychos"
+            answer:    ["King Joffrey", "Lemon Cakes, tasty Lemon Cakes!","Being married off to psychos"],
+            correct:   1
             //img
         }, {
             question:  "What is Tyrion Lannisters Favorite god?",
-            answer:    "God of tits & wine",
-            incorrect: "The old gods & the new"
+            answer:    ["God of tits & wine","The old gods & the new"],
+            correct:   0
         }, {
             question:  "What's Danaerys Stormborn's full name?",
-            answer:    "Nobody knows, its to darn long!",
-            incorrect: "Mother of dragons"
+            answer:    ["Nobody knows, its to darn long!","Mother of dragons"],
+            correct:   0
         }, {
-            question:  "How many main characters have died so far?",
-            answer:    "Almost all of them",
-            incorrect: "4"
+            question:  "How many characters have died so far?",
+            answer:    ["4","Almost all of them", "150,966"],
+            correct:   2
         }, {
             question:  "What's Cersai Lannister favourite past-time?",
-            answer:    "Plotting the destruction of the Red keep",
-            incorrect: "Going to the Opera"
+            answer:    ["Plotting the destruction of the Red keep", "Going to the opera", "getting a mani-pedi"],
+            correct:   0
         }, {
             question:  "Who said Chaos is a ladder?",
-            answer:    "Petyr Balish",
-            incorrect: "Ned Stark"
+            answer:    ["Petyr Balish","Ned Stark", "old nan"],
+            correct:   0
         }, {
             question:  "Who is the real heros of the series",
-            answer:    "Samwell Tarly & Tyrion Lannister",
-            incorrect: "Ramsey Snow & Joffrey Lannister"
+            answer:    ["Samwell Tarly & Tyrion Lannister","Ramsey Snow & Joffrey Lannister", "your mum"],
+            correct:   0
         }, {
             question:  "What role does Frodo play?",
-            answer:    "Frodo isn't in this show",
-            incorrect: "Chef of second breakfasts"
+            answer:    ["Cersei and Jamie's brother","Chef of second breakfasts","Frodo isn't in this show"],
+            correct:   2
+        },{
+            question:  "What is Tyrion's body guard & friend",
+            answer:    ["Harry Potter", "Legolas of the Woodland Elves", "Bran"],
+            correct:   0
         }];
     
 
-    //Question possibilities, incorrect, correct, and unanswered
+    //Question possibilities, incorrect, correct, & unanswered
     var incorrectAns = 0;
     var correctAns   = 0;
     var unanswered   = 0;
@@ -56,11 +60,9 @@ $(function () {
     var time = 20;
     var counter;
     var timeStart = false;
-    
-    for ( var i = 0; i < quiz.length; i++ ){
-        console.log(quiz[i]);
-        console.log(this[i]);
-    }
+
+    var usrChoice = [];
+    var correctIndx = quiz[currQuestion].correct;        //correct index, to check if answer picked matches the correct ans index.
 
     
     $('.answers').hide();
@@ -94,40 +96,51 @@ $(function () {
         $('.timer').html(' <h2> You\'re not a \n stable Genius </h2>');        
     }
 
-    var begin_quiz = function() {
-        $('.start').on('click', function(){
-            console.log( 'button clicked -> Timer begins');
-            begin_timer();
-            $('.timer').html('<h2> Time Remaining: ' + time + '</h2>');
-        });
-        }
-// begin_quiz();
-// begin_timer();
-// count_down();
-
     //DISREGARD -> Trying to see how to pull from quiz. 
     console.log( quiz[currQuestion].question );
-    console.log( quiz[currQuestion].answer );
+    //console.log( quiz[currQuestion].answer );
     
-    var get_question = function() {
-        $('.question').html(quiz[currQuestion].question);
+    var show_question = function() {
+        var qQuest = quiz[currQuestion].question;
+        $('.question').html(qQuest);
         
         var answer = quiz[currQuestion].answer;
 
-        for ( var i=0; i <= answer.length; i++ ){
+        for ( var i=0; i < answer.length; i++ ){
             console.log(answer[i]);
 
-            var addAnswer = $('<div>');
-            addAnswer.text(answer[i])
-            //$('.answer').html(quiz[currQuestion].answer);
+            var addAnswer = $('<div>'); 
+            addAnswer.text(answer[i]);
+            addAnswer.addClass('button');
+            addAnswer.attr('data-value', i);
             $('.answer').append(addAnswer);
+        }     
+    }
+
+    var check_answer = function() {
+        if (usrChoice !== correctIndx){
+            usrChoice = " ";
+            console.log('wrong')
         }
-    }();
-    
+        else {
+            correctAns++;
+            console.log('yes');
+        }   
 
+    }
 
+    $('.start').on('click', function(){
+        $(this).hide();
+        $('.question').show();
+        $('.answers').show();
 
-
-
+        begin_timer();
+        show_question();
+    })
+    $('.answer').on('click', '.button', function(){
+        usrChoice = parseInt($(_t).attr('data-value'))
+        check_answer();
+        //console.log(answer);
+    })
 
 });

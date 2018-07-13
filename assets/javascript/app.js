@@ -61,18 +61,17 @@ $(function () {
     var counter;
     var timeStart = false;
 
-    var usrChoice = [];
+    var usrChoice = "";
     var correctIndx = quiz[currQuestion].correct;        //correct index, to check if answer picked matches the correct ans index.
-
-    
+    $('.start-image').fadeIn(3000);
     $('.answers').hide();
     $('.questions').hide();
-    $('.reset').hide();
+    $('.restart').hide();
     
     //conditional to check if time is started - Sets time.
     var begin_timer = function() {
         if ( timeStart != true ){
-            counter = setInterval(count_down, 1000);
+            counter = setInterval(count_down, 100);
             timeStart = true;
         }
     };
@@ -83,64 +82,86 @@ $(function () {
         time--;
         console.log(time);
 
-        if ( time < 0 ) {
+        if ( time <= 0 ) {
+            $('.answer').empty();
            unanswered++;
            timer_stop();
+           currQuestion++;
+           show_question();    
         }
     };
 
     //clears time interval -> makes changes to HTML   
     var timer_stop = function() {
         !timeStart;
-        clearInterval(counter);
-        $('.timer').html(' <h2> You\'re not a \n stable Genius </h2>');        
+        time = 20;
+        clearInterval(time);        
     }
 
     //DISREGARD -> Trying to see how to pull from quiz. 
     console.log( quiz[currQuestion].question );
-    //console.log( quiz[currQuestion].answer );
     
     var show_question = function() {
-        var qQuest = quiz[currQuestion].question;
-        $('.question').html(qQuest);
-        
+        var qQuest = quiz[currQuestion].question;   
         var answer = quiz[currQuestion].answer;
+        $('.question').html(qQuest);
 
         for ( var i=0; i < answer.length; i++ ){
             console.log(answer[i]);
 
+            //Like to thank Josh for this
             var addAnswer = $('<div>'); 
             addAnswer.text(answer[i]);
             addAnswer.addClass('button');
             addAnswer.attr('data-value', i);
             $('.answer').append(addAnswer);
-        }     
+        }
     }
 
     var check_answer = function() {
         if (usrChoice !== correctIndx){
-            usrChoice = " ";
-            console.log('wrong')
+            usrChoice = "";
+            currQuestion++;
+            show_question();
         }
         else {
-            correctAns++;
-            console.log('yes');
-        }   
+            timer_stop();
 
+            correctAns++;
+            currQuestion++;
+            
+            $('.answer').empty();
+            setTimeout(show_question, 1000)
+            
+        }
+    }
+
+    var reset = function() {
+
+    }
+    //JS equivalent to sleep() -- Allowing for smoother animation
+    function sleep (time) {
+        return new Promise((resolve) => setTimeout(resolve, time));
     }
 
     $('.start').on('click', function(){
         $(this).hide();
         $('.question').show();
-        $('.answers').show();
-
+        $('.start-image').fadeOut(200);
+        $('.answers').fadeIn("slow");
+       // $('.answers').show();
+        
+        //calling sleep so that when answers pop up, the image is already gone.
+        sleep(400).then(() => {
+        show_question(); 
         begin_timer();
-        show_question();
-    })
+        });
+    });
     $('.answer').on('click', '.button', function(){
-        usrChoice = parseInt($(_t).attr('data-value'))
+        usrChoice = parseInt($(this).attr('data-value'));
         check_answer();
-        //console.log(answer);
-    })
+        console.log(correctIndx);
+        console.log(usrChoice);
+    });
 
 });

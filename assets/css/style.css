@@ -1,0 +1,150 @@
+                            /*  very stylish CSS */
+                        
+@import url('https://fonts.googleapis.com/css?family=Chonburi|Inconsolata|Montserrat|Oswald');
+
+* {
+    box-sizing: border-box;
+}
+body {
+    max-width: 960px;
+   
+    margin: 0px auto;
+
+    background: url(../images/shiregandalf.jpeg);
+    background-size: 100%;
+    background-blend-mode: hard-light;
+}
+
+.container{
+    justify-content: center;
+    margin: 0px auto;
+}
+
+
+.head {
+    padding: 25px 0px 20px 0px;
+    max-width: 600px;
+    font-family: 'Chonburi', 'monospace';
+    font-size:   42px;
+    line-height: 50px;
+    line-break: auto;
+    position: relative;
+    text-align: center;
+    margin-left: 17%;
+
+    color: #ffff;
+}
+
+.start-image {
+    position: relative;
+    margin-left: 100px;
+}
+
+.timer {
+    font-family: monospace;
+    line-height: 84px;
+    font-weight: bold;
+    font-size: 52px;
+    text-align: center;
+    margin: 10px 10px 25px 10px;
+
+    color: #ffff;
+}
+
+.question {
+    color: #ffff;
+    font-size: 42px;
+    line-height: 30px;
+    margin: 10px 15px 25px 15px;
+    text-align: center;
+    font-weight: bolder;
+    font-family: 'Inconsolata', Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
+}
+
+.answer {
+    color: #ffff;
+    font-size: 34px;
+    line-height: 50px;
+    text-align: center;
+    padding: 30px;
+    justify-content: space-between;
+    cursor: zoom-in;  
+    
+    margin-top: 25px;
+    margin-bottom: 20px;
+    padding: 25px 0px 25px 0px;
+    
+    
+}
+
+.answer:hover > div:hover {
+    font-size: 48px;
+    font-weight: bold;
+    font-family: 'Oswald', Arial, Helvetica, sans-serif
+
+}
+.answer:hover > div:not(:hover) {
+    opacity: 0.5;
+}
+.correct, .wrong, .unanswered {
+    background: #efdbae;
+    text-align: center;
+    font-size: 42px;
+    line-height: 90px;
+    font-family: 'Monseratt', Arial, Helvetica, sans-serif;
+
+}
+.correct {
+
+}
+
+.wrong {
+
+}
+
+.unanswered {
+
+}
+
+.start, .restart {
+    justify-content: center;
+    display: block;
+    position: relative;
+    font-size: 50px;
+    padding: 20px 120px 20px 120px;
+    margin-top:  5px;
+    margin-left: 275px;
+    background-color:  #4CAF50; 
+    border-radius: 15px;
+    outline: none;
+    border:none;
+    box-shadow: 0 9px 9px #4CAF84;
+    color: #058888;
+
+    /*box-shadow: 7px 7px 7px 9px #cccccc;*/
+}
+
+/*.start:hover {
+    padding: 35px 190px 35px 190px;
+    font-size: 74px;
+    font-weight: bolder;
+    margin-left: 140px;
+}*/
+
+.button:hover {background-color: #3e8e41}
+
+.start:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
+
+
+.restart {
+    padding-left: 100px;
+    padding-right: 100px;
+    justify-content: center;
+}
+
+

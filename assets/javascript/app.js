@@ -1,6 +1,6 @@
 /*Triva game logic */
 
-/*                To whom it may concern! --> dev Notes :P
+/*                To whom it may concern
 * 1. Time often takes a second or two to reload -> unsure why.
 * 2. Do not answer to quickly after time is loaded. can cause it to hang.
 * 3. Spamming answers can also cause the timer to hang.
@@ -93,7 +93,7 @@ $(function () {
         if (time < 1) {
             $('.answer').empty();
             unanswered++;
-            timer_stop();
+            // timer_stop();
             currQuestion++;
             show_question();
         }
@@ -108,10 +108,11 @@ $(function () {
 
     //DISREGARD -> Trying to see how to pull from quiz. 
     console.log(quiz[currQuestion].question);
-    
+
     //brings up the current question, and it's answer.
     var show_question = function () {
-        time = 20;
+        //time = 20;
+        //begin_timer();
         var qQuest = quiz[currQuestion].question;
         var answer = quiz[currQuestion].answer;
         $('.question').html(qQuest);
@@ -121,29 +122,27 @@ $(function () {
             reset_game();
         }
         else {
-        for (var i = 0; i < answer.length; i++) {
-            console.log(answer[i]);
-            //Like to thank Josh for this
-            var addAnswer = $('<div>');
-            addAnswer.text(answer[i]);
-            addAnswer.addClass('button');
-            addAnswer.attr('data-value', i);
-            $('.answer').append(addAnswer);
-            //begin_timer();
+            for (var i = 0; i < answer.length; i++) {
+                console.log(answer[i]);
+                //Like to thank Josh for this
+                var addAnswer = $('<div>');
+                addAnswer.text(answer[i]);
+                addAnswer.addClass('button');
+                addAnswer.attr('data-value', i);
+                $('.answer').append(addAnswer);
             }
         }
     }
 
     //conditional to check if userChoice is of correct/incorrectly
     var check_answer = function () {
-        //Had to add + 1, as its count was 1 behind. 
-        if (currQuestion  + 1  === quiz.length) {
+        //Had to add + 1, as its count was 1 behind. (due to being post inc? would a preInc have fixed this?)
+        if (currQuestion + 1 === quiz.length) {
             $('.answer').hide();
             $('.question').hide();
-            $('.restart').show(); 
-            
+            $('.restart').show();
             reset_game();
-        } 
+        }
         else if (usrChoice !== correctIndx) {
             usrChoice = "";
             currQuestion++;
@@ -159,12 +158,7 @@ $(function () {
             $('.answer').empty();
             setTimeout(show_question, 750)
         }
-
-
-
     }
-
-    //checks if the quiz is at it's final question. 
 
     //function to reset the game from beginning
     var reset_game = function () {
@@ -178,12 +172,13 @@ $(function () {
         $('.wrong').html('Wrong Answers: ' + incorrectAns);
         $('.unanswered').html('Unanswered: ' + unanswered);
         //clearInterval(counter);
-        
+
         clean_stats();
         return true;
     }
 
-    var next_round = function(){
+    //Function for a new game round, empty/hiding/showing neccisary selectors
+    var next_round = function () {
         $('.answer').empty();
         $('.answer').show();
         $('.correct').hide();
@@ -192,37 +187,40 @@ $(function () {
         $('.restart').hide();
         $('.start-image').show();
         $('.start').show();
-          
         //timer_stop();
         //begin_timer();
         //count_down();
         //$('.timer').show();
     }
 
+    //Sets all counted variables back to Zero for new round
     var clean_stats = function () {
         currQuestion = 0;
-        unanswered   = 0;
-        correctAns   = 0;
+        unanswered = 0;
+        correctAns = 0;
         incorrectAns = 0;
+    }
+
+    var get_image = function () {
+        var quizImage = game[currQuestion].gif
+        $('.image').append('<img> class="image" src=" + quizImage + "></img');
+        $('.timer').empty();
     }
 
 
     //for start button
     $('.start').on('click', function () {
-        $(this).hide();
-        $('.question').show();
+       $(this).hide();
+       // $('.question').show();
         $('.start-image').fadeOut(200);
-        $('.answers').fadeIn("slow");
-
-        //$('.timer').show();
-        // $('.answers').show();
+        
         
         //calling sleep so that when answers pop up, the image is already gone.
-        sleep(450).then(() => {
-            $('.timer').show();
-            show_question();
-           // count_down();
+        sleep(250).then(() => {
+           $('.timer').show("fast"); 
             begin_timer();
+            show_question();
+            $('.answers').fadeIn("slow");  
             
         });
     });
@@ -237,7 +235,7 @@ $(function () {
     });
 
     $('.restart').on('click', function () {
-       next_round();
+        next_round();
     });
 
 
@@ -245,4 +243,5 @@ $(function () {
     function sleep(time) {
         return new Promise((resolve) => setTimeout(resolve, time));
     }
+
 });

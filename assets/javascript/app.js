@@ -79,7 +79,7 @@ $(function () {
     //conditional to check if time is started - Sets time.
     var begin_timer = function () {
         if (timeStart != true) {
-            counter = setInterval(count_down, 900);
+            counter = setInterval(count_down, 1000);
             timeStart = true;
         }
     };
@@ -90,10 +90,10 @@ $(function () {
         time--;
         console.log(time);
 
-        if (time < 1) {
+        if (time <= 0) {
             $('.answer').empty();
             unanswered++;
-            // timer_stop();
+            timer_stop();
             currQuestion++;
             show_question();
         }
@@ -102,7 +102,6 @@ $(function () {
     //clears time interval -> makes changes to HTML   
     var timer_stop = function () {
         !timeStart;
-        // time = 20;
         clearInterval(counter);
     }
 
@@ -112,7 +111,7 @@ $(function () {
     //brings up the current question, and it's answer.
     var show_question = function () {
         //time = 20;
-        //begin_timer();
+        
         var qQuest = quiz[currQuestion].question;
         var answer = quiz[currQuestion].answer;
         $('.question').html(qQuest);
@@ -141,26 +140,34 @@ $(function () {
             $('.answer').hide();
             $('.question').hide();
             $('.restart').show();
-            reset_game();
+            $('.correct').html('Correct Answers: ' + correctAns);
+            $('.wrong').html('Wrong Answers: ' + incorrectAns);
+            $('.unanswered').html('Unanswered: ' + unanswered);
+           // reset_game();
+           timer_stop();
         }
         else if (usrChoice !== correctIndx) {
             usrChoice = "";
             currQuestion++;
             incorrectAns++;
-            $('.answer').empty();
+            $('.answer').empty();    
             show_question();
+           // timer_stop();
             console.log(currQuestion);
+            time = 20;
         }
         else {
-            timer_stop();
+           // timer_stop();
+            time = 20;
             correctAns++;
             currQuestion++;
             $('.answer').empty();
-            setTimeout(show_question, 750)
+            show_question();
+            
         }
     }
 
-    //function to reset the game from beginning
+    /*function to reset the game from beginning
     var reset_game = function () {
         $('.timer').empty();
         $('.question').empty();
@@ -199,7 +206,7 @@ $(function () {
         unanswered = 0;
         correctAns = 0;
         incorrectAns = 0;
-    }
+    }*/
 
     var get_image = function () {
         var quizImage = game[currQuestion].gif
@@ -207,21 +214,24 @@ $(function () {
         $('.timer').empty();
     }
 
-
+    // calling the timer once before on click for smoother start.
     //for start button
     $('.start').on('click', function () {
+    
        $(this).hide();
        // $('.question').show();
         $('.start-image').fadeOut(200);
-        
-        
+        $('.question').slideDown();
+        $('.answers').show()
         //calling sleep so that when answers pop up, the image is already gone.
         sleep(250).then(() => {
-           $('.timer').show("fast"); 
-            begin_timer();
-            show_question();
-            $('.answers').fadeIn("slow");  
             
+           $('.timer').show("fast"); 
+            time = 20;
+            begin_timer();
+            
+            $('.answer').fadeIn("slow");  
+            show_question();
         });
     });
 
@@ -235,7 +245,8 @@ $(function () {
     });
 
     $('.restart').on('click', function () {
-        next_round();
+        //next_round();
+        location.reload();
     });
 
 

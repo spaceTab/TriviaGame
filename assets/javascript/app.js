@@ -42,7 +42,7 @@ $(function () {
             question: "Who is the Leads the Orcs",
             answer: ["Sauromon", "Witch King of Angmar", "Balrog"],
             correct: 0,
-            img: './assets/images/sarumon.gif'
+            img: './assets/images/sarumon1.gif'
         }, {
             question: "Shall I pass?",
             answer: ["Sure, by all means", "YOU SHALL NOT PASS!"],
@@ -90,6 +90,7 @@ $(function () {
             timeStart = true;
         }
     };
+    
 
     //begins time counter.
     var count_down = function () {
@@ -184,12 +185,74 @@ $(function () {
             
             setTimeout(function(){
                 $('#img').remove();
-                show_question();  
+                show_question();
                 $('.timer').show();  
                 time = 20; 
+                $('.question').show();
             }, 4000, count_down());
         }
     }
+
+
+    var get_image = function () {
+
+        var quizImage = quiz[currQuestion].img;
+
+       // $('.img').show();
+        $('.timer').empty();  //appends image to div -> dk why had yo use ID's but it worked.
+        $('.img').append('<img id="img" src=' + quizImage + '></img');
+        console.log('IMG YES');
+    }
+
+    // calling the timer once before on click for smoother start.
+    //for start button
+    $('.timer').hide();
+    setTimeout(count_down, 1);
+        
+
+    $('.start').on('click', function () {
+        $(this).hide();
+       // $('.question').show();
+        $('.start-image').fadeOut(200);
+        $('.question').slideDown();
+        //$('.answers').show()
+        //calling sleep so that when answers pop up, the image is already gone.
+        sleep(250).then(() => {
+            
+           $('.timer').show("fast"); 
+            time = 20;
+            begin_timer();
+            
+            $('.answer').fadeIn("slow");  
+            show_question();
+        });
+    });
+
+    //event for answer click
+    $('.answer').on('click', '.button', function () {
+        usrChoice = parseInt($(this).attr('data-value')); //Checks the string input to the index of answer
+        check_answer();
+        console.log(correctIndx);
+        console.log(usrChoice);
+    });
+
+    $('.restart').on('click', function () {
+        //next_round();
+        location.reload();
+    });
+
+
+    //JS equivalent to sleep() -- Allowing for smoother animation
+    //found this after a long night, I realize now it's pretty much just set timeout
+    //Gonna keep cause it looks fancy
+    function sleep(time) {
+        return new Promise((resolve) => setTimeout(resolve, time));
+    }
+
+});
+
+
+
 
     /*function to reset the game from beginning
     var reset_game = function () {
@@ -231,56 +294,3 @@ $(function () {
         correctAns = 0;
         incorrectAns = 0;
     }*/
-
-    var get_image = function () {
-
-        
-        var quizImage = quiz[currQuestion].img;
-
-       // $('.img').show();
-        $('.timer').empty(); 
-        $('.img').append('<img id="img" src=' + quizImage + '></img');
-        console.log('IMG YES');
-    }
-
-    // calling the timer once before on click for smoother start.
-    //for start button
-    $('.start').on('click', function () {
-        $(this).hide();
-       // $('.question').show();
-        $('.start-image').fadeOut(200);
-        $('.question').slideDown();
-        $('.answers').show()
-        //calling sleep so that when answers pop up, the image is already gone.
-        sleep(250).then(() => {
-            
-           $('.timer').show("fast"); 
-            time = 20;
-            begin_timer();
-            
-            $('.answer').fadeIn("slow");  
-            show_question();
-        });
-    });
-
-
-    //event for answer click
-    $('.answer').on('click', '.button', function () {
-        usrChoice = parseInt($(this).attr('data-value'));
-        check_answer();
-        console.log(correctIndx);
-        console.log(usrChoice);
-    });
-
-    $('.restart').on('click', function () {
-        //next_round();
-        location.reload();
-    });
-
-
-    //JS equivalent to sleep() -- Allowing for smoother animation
-    function sleep(time) {
-        return new Promise((resolve) => setTimeout(resolve, time));
-    }
-
-});

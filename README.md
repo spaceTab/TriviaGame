@@ -1,18 +1,23 @@
 # TriviaGame
 ## UNH-Coding bootcamp assignment Week-5
 
-# __Details__
+![LORD OF THE RINGS!](./images/lotr_start.png)
+Format: ![Alt Text](The fellowship)
+
 
 ### Fun Triva game utilizing _jQueries_ `setTimeout` feature
-### the game will give the user a timed question based upon the games theme.
 
-### The user then has to answer each of these questions before the time runs out. The answers will be presented as either true / false, or multiple choice.
+# __rules__
 
-### The game ends when time runs out, then revealing to the user the number of question the players answered correctly or incorrectly.
+###The goal of the user is to guess each question in the allotted time given. The question will 2 or 3 multiple choice answers. Each answer the user chooses is then tally'd up into a scoresheet, Either being Correct, Incorrect, or not answered within in the alotted time. After each question is either answered or time has run out, the game moves to the next question. Until there are no more questions. At the finally question the is given their scoresheet & the option to play another round. Starting the questions back at beginning. 
+
+# __Theme__
+
+### The games theme is based off the brilliant novels of _Tolkien_, using images from the characters of the movie adaptations. 
 
 
-
-
+https://spacetab.github.io/TriviaGame/ - automatic
+[Test your knowledge](https://spacetab.github.io/TriviaGame/)
 
 
 

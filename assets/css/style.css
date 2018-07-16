@@ -95,17 +95,6 @@ body {
     font-family: 'Monseratt', Arial, Helvetica, sans-serif;
 
 }
-.correct {
-
-}
-
-.wrong {
-
-}
-
-.unanswered {
-
-}
 
 .start, .restart {
     justify-content: center;
@@ -120,7 +109,7 @@ body {
     outline: none;
     border:none;
     box-shadow: 0 9px 9px #4CAF84;
-    color: #058888;
+    color: #ffff;
 
     /*box-shadow: 7px 7px 7px 9px #cccccc;*/
 }
@@ -145,6 +134,13 @@ body {
     padding-left: 100px;
     padding-right: 100px;
     justify-content: center;
+}
+
+.img {
+    justify-content: center;
+    display: block;
+    position: relative;
+    margin-left: 25%;
 }
 
 

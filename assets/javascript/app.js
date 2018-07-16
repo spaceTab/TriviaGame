@@ -20,12 +20,12 @@ $(function () {
             img:    './assets/images/potaytoes.gif'
         }, {
             question: "What was was gollums name before he got weird?",
-            answer: ["Fabio", "Smeagle", "Bilbo"],
-            correct: 1,
-            img: './assets/images/gollumEars.gif'
+            answer: ["Smeagle", "Fabio", "Bilbo"],
+            correct: 0,
+            img:    './assets/images/gollumEars.gif'
         }, {
             question: "What was Gandalfs name became Galdaf the White",
-            answer: ["Gandalf", "Laquisha", "Gandalf the Grey"],
+            answer: ["Gandalf the Grey", "Laquisha", "Gandalf"],
             correct: 2,
             img: './assets/images/sassygandalf1.gif'
         }, {
@@ -36,7 +36,7 @@ $(function () {
         }, {
             question: "Who Came in at the last minute to save Frodo & Sam",
             answer: ["Gothmog", "The Eagles", "Pippin"],
-            correct: 2,
+            correct: 1,
             img: './assets/images/eagles.gif'
         }, {
             question: "Who is the Leads the Orcs",
@@ -114,7 +114,7 @@ $(function () {
     }
 
     //DISREGARD -> Trying to see how to pull from quiz. 
-    console.log(quiz[currQuestion].question);
+   // console.log(quiz[currQuestion].question);
 
     //brings up the current question, and it's answer.
     var show_question = function () {
@@ -155,31 +155,40 @@ $(function () {
            timer_stop();
         }
         else if (usrChoice !== correctIndx) {
+            get_image();  
             usrChoice = "";
             currQuestion++;
             incorrectAns++;
+            imgCount++;
             $('.answer').empty();    
-            show_question();
-           // timer_stop();
-            console.log(currQuestion);
+            
+            setTimeout(function(){
+                $('#img').remove();
+                show_question();  
+                $('timer').show();
+                time = 20;
+            }, 4000, count_down());
+
+            console.log(currQuestion);  
             time = 20;
         }
         else {
-            // timer_stop(); 
+            console.log('question count: ' + currQuestion); 
             get_image();
             $('.timer').hide();
             correctAns++;
             currQuestion++;
+            imgCount++;
             $('.answer').empty();
+            $('.question').hide();
+            
             setTimeout(function(){
-                $('.img').remove();
+                $('#img').remove();
                 show_question();  
                 $('.timer').show();  
                 time = 20; 
             }, 4000, count_down());
-           // count_down();
         }
-        time = 20;
     }
 
     /*function to reset the game from beginning
@@ -224,23 +233,20 @@ $(function () {
     }*/
 
     var get_image = function () {
-        if (currQuestion > 0){
-            imgCount = currQuestion + 1;
-        }
-        var quizImage = quiz[imgCount].img;
+
         
-       
-        $('.img').show();
+        var quizImage = quiz[currQuestion].img;
+
+       // $('.img').show();
         $('.timer').empty(); 
-        $('.img').append('<img class="image" src=' + quizImage + '></img');
+        $('.img').append('<img id="img" src=' + quizImage + '></img');
         console.log('IMG YES');
     }
 
     // calling the timer once before on click for smoother start.
     //for start button
     $('.start').on('click', function () {
-    
-       $(this).hide();
+        $(this).hide();
        // $('.question').show();
         $('.start-image').fadeOut(200);
         $('.question').slideDown();

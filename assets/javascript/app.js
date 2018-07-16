@@ -9,7 +9,7 @@
 *    after each ' stage ' & all should be good */
 $(function () {
 
-    var _t = this;
+    //var _t = this;
 
     //Game questions ands answers (multichoice format)
     var quiz = [
@@ -78,7 +78,7 @@ $(function () {
 
     var usrChoice = "";
     var correctIndx = quiz[currQuestion].correct;        //correct index, to check if answer picked matches the correct ans index.
-    $('.start-image').fadeIn(3000);
+    $('.start-image').fadeIn("slow");
     $('.answers').hide();
     $('.questions').hide();
     $('.restart').hide();
@@ -137,7 +137,9 @@ $(function () {
                 addAnswer.text(answer[i]);
                 addAnswer.addClass('button');
                 addAnswer.attr('data-value', i);
+                $('.answer').fadeIn("slow");
                 $('.answer').append(addAnswer);
+                
             }
         }
     }

@@ -1,7 +1,7 @@
                             /*  very stylish CSS */
                         
 @import url('https://fonts.googleapis.com/css?family=Chonburi|Inconsolata|Montserrat|Oswald');
-
+@import url('https://fonts.googleapis.com/css?family=Lobster');
 * {
     box-sizing: border-box;
 }
@@ -25,19 +25,48 @@ body {
     padding: 25px 0px 20px 0px;
     max-width: 600px;
     font-family: 'Chonburi', 'monospace';
-    font-size:   42px;
+    font-size:   52px;
     line-height: 50px;
     line-break: auto;
     position: relative;
     text-align: center;
     margin-left: 17%;
 
-    color: #ffff;
+     background: linear-gradient(#f2c707,#f2592b, #a00613);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+   
+   /*
+    cant get it to work for Text, & not background..
+    -webkit-animation-name: firey;
+    -webkit-text-fill-color: text;
+    
+    -webkit-animation-duration: 5s;
+    animation-name: firey;
+    animation-duration: 5s;*/
 }
+
+/* @keyframes firey {
+    0% {
+        background-color: #f2c707;
+    }
+
+    25% {
+        background-color: #a00613;
+    }
+    50% {
+        background-color: #c90616;
+    }
+    100% {
+        background-color: #ff0014;
+    }
+
+}*/
 
 .start-image {
     position: relative;
     margin-left: 100px;
+    widows: 0 5px 15px #666;
 }
 
 .timer {
@@ -79,21 +108,27 @@ body {
 }
 
 .answer:hover > div:hover {
-    font-size: 48px;
+    font-size:   48px;
     font-weight: bold;
     font-family: 'Oswald', Arial, Helvetica, sans-serif
 
 }
+
+.answer:hover > div:active  {
+    font-weight: bolder;
+}
 .answer:hover > div:not(:hover) {
-    opacity: 0.5;
+    opacity: 0.8;
+    font-size: 30px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 .correct, .wrong, .unanswered {
-    background: #efdbae;
+    color: #ffff;
     text-align: center;
     font-size: 42px;
     line-height: 90px;
     font-family: 'Monseratt', Arial, Helvetica, sans-serif;
-
+    
 }
 
 .start, .restart {
@@ -108,13 +143,42 @@ body {
     border-radius: 15px;
     outline: none;
     border:none;
-    box-shadow: 0 9px 9px #4CAF84;
+    box-shadow: 3px 10px 9px #fff1ff;
     color: #ffff;
 
     /*box-shadow: 7px 7px 7px 9px #cccccc;*/
 }
 
 .start:hover {
+    padding: 35px 160px 35px 180px;
+    font-size: 74px;
+    font-weight: bolder;
+    margin-left: 175px;
+    font-family: 'Inconsolata';
+    cursor: pointer;
+    font-family: 'Lobster', cursive;
+    text-align: center;
+}
+
+.button:hover {background-color: #a9f2d2}
+
+.start:active {
+    background-color: #162b17;
+    box-shadow: 3px 10px 9px #666;
+    transform: translateY(4px);
+    
+  }
+
+
+.restart {
+    padding-left: 100px;
+    padding-right: 100px;
+    justify-content: center;
+    margin-top: 15px;
+
+}
+
+.restart:hover {
     padding: 35px 160px 35px 200px;
     font-size: 74px;
     font-weight: bolder;
@@ -123,26 +187,12 @@ body {
     cursor: pointer;
 }
 
-.button:hover {background-color: #3e8e41}
-
-.start:active {
-    background-color: #3e8e41;
-    box-shadow: 0 5px #666;
-    transform: translateY(4px);
-  }
-
-
-.restart {
-    padding-left: 100px;
-    padding-right: 100px;
-    justify-content: center;
-}
-
 .img {
     justify-content: center;
     display: block;
     position: relative;
     margin-left: 25%;
 }
+
 
 

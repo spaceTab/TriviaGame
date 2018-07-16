@@ -114,12 +114,14 @@ body {
     /*box-shadow: 7px 7px 7px 9px #cccccc;*/
 }
 
-/*.start:hover {
-    padding: 35px 190px 35px 190px;
+.start:hover {
+    padding: 35px 160px 35px 200px;
     font-size: 74px;
     font-weight: bolder;
-    margin-left: 140px;
-}*/
+    margin-left: 160px;
+    font-family: 'Inconsolata';
+    cursor: pointer;
+}
 
 .button:hover {background-color: #3e8e41}
 

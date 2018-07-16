@@ -1,8 +1,8 @@
 # TriviaGame
 ## UNH-Coding bootcamp assignment Week-5
 
-![LORD OF THE RINGS!](./images/lotr_start.png)
-Format: ![Alt Text](The fellowship)
+![LORD OF THE RINGS!](/images/lotr_start.png)
+
 
 
 ### Fun Triva game utilizing _jQueries_ `setTimeout` feature
@@ -16,8 +16,8 @@ Format: ![Alt Text](The fellowship)
 ### The games theme is based off the brilliant novels of _Tolkien_, using images from the characters of the movie adaptations. 
 
 
-https://spacetab.github.io/TriviaGame/ - automatic
-[Test your knowledge](https://spacetab.github.io/TriviaGame/)
+
+[Play the deployed game & test your knowledge of LOTR!](https://spacetab.github.io/TriviaGame/)
 
 
 

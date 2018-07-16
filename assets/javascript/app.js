@@ -14,55 +14,62 @@ $(function () {
     //Game questions ands answers (multichoice format)
     var quiz = [
         {
-            question: "What does Jon Snow know?",
-            answer: ["Jon Snow knows nothing ", " Jon Snow knows theoretical physics"],
-            correct: 0
-            //img
+            question:"What do you do with potatoes?",
+            answer: ["Boil 'um! Mash 'um!, stick 'em in a stew!", "Idk I'm smeagle", "Give them away"],
+            correct: 0,
+            img:    './assets/images/potaytoes.gif'
         }, {
-            question: "What's Sansa Starks favorite thing?",
-            answer: ["King Joffrey", "Lemon Cakes, tasty Lemon Cakes!", "Being married off to psychos"],
-            correct: 1
-            //img
+            question: "What was was gollums name before he got weird?",
+            answer: ["Fabio", "Smeagle", "Bilbo"],
+            correct: 1,
+            img: './assets/images/gollumEars.gif'
         }, {
-            question: "What is Tyrion Lannisters Favorite god?",
-            answer: ["God of tits & wine", "The old gods & the new"],
-            correct: 0
+            question: "What was Gandalfs name became Galdaf the White",
+            answer: ["Gandalf", "Laquisha", "Gandalf the Grey"],
+            correct: 2,
+            img: './assets/images/sassygandalf1.gif'
         }, {
-            question: "What's Danaerys Stormborn's full name?",
-            answer: ["Nobody knows, its to darn long!", "Mother of dragons"],
-            correct: 0
+            question: "Where is Frodo from?",
+            answer: ["Rohan", "The Shire, like us!",  "New York"],
+            correct: 1,
+            img: './assets/images/theshire.gif'
         }, {
-            question: "How many characters have died so far?",
-            answer: ["4", "Almost all of them", "150,966"],
-            correct: 2
+            question: "Who Came in at the last minute to save Frodo & Sam",
+            answer: ["Gothmog", "The Eagles", "Pippin"],
+            correct: 2,
+            img: './assets/images/eagles.gif'
         }, {
-            question: "What's Cersai Lannister favourite past-time?",
-            answer: ["Plotting the destruction of the Red keep", "Going to the opera", "getting a mani-pedi"],
-            correct: 0
+            question: "Who is the Leads the Orcs",
+            answer: ["Sauromon", "Witch King of Angmar", "Balrog"],
+            correct: 0,
+            img: './assets/images/sarumon.gif'
         }, {
-            question: "Who said Chaos is a ladder?",
-            answer: ["Petyr Balish", "Ned Stark", "old nan"],
-            correct: 0
+            question: "Shall I pass?",
+            answer: ["Sure, by all means", "YOU SHALL NOT PASS!"],
+            correct: 1,
+            img: './assets/images/nopass.gif'
         }, {
-            question: "Who is the real heros of the series",
-            answer: ["Samwell Tarly & Tyrion Lannister", "Ramsey Snow & Joffrey Lannister", "your mum"],
-            correct: 0
+            question: "Who is the real Heroes of this story",
+            answer: ["SamWise Gange", "Frodo", "Sauromon"],
+            correct: 0,
+            img: './assets/images/samwise.gif'
         }, {
             question: "What role does Frodo play?",
-            answer: ["Cersei and Jamie's brother", "Chef of second breakfasts", "Frodo isn't in this show"],
-            correct: 2
+            answer: ["Head master at Hogwarts", "Chef of second breakfasts", "bearer of the Ring"],
+            correct: 2,
+            img: './assets/images/frodolol.gif'
         }, {
-            question: "What is Tyrion's body guard & friend",
-            answer: ["Harry Potter", "Legolas of the Woodland Elves", "Bran"],
-            correct: 0
+            question: "Who is the funnest of the fellowship?",
+            answer: ["Gimly, Obviously", "Legolas of the Woodland Elves", "Martha Stewart"],
+            correct: 0,
+            img: './assets/images/gimli.gif'
         }];
 
 
     //Question possibilities, incorrect, correct, & unanswered
-    var incorrectAns = 0;
-    var correctAns = 0;
-    var unanswered = 0;
+    var incorrectAns = 0, correctAns = 0, unanswered = 0;
     var currQuestion = 0;
+    var imgCount = 0;
 
     //variables for timer--> meaningful variable names maybe hardest part of coding
     var time = 20;
@@ -93,9 +100,10 @@ $(function () {
         if (time <= 0) {
             $('.answer').empty();
             unanswered++;
-            timer_stop();
+            //timer_stop();
             currQuestion++;
             show_question();
+            time = 20;
         }
     };
 
@@ -157,14 +165,21 @@ $(function () {
             time = 20;
         }
         else {
-           // timer_stop();
-            time = 20;
+            // timer_stop(); 
+            get_image();
+            $('.timer').hide();
             correctAns++;
             currQuestion++;
             $('.answer').empty();
-            show_question();
-            
+            setTimeout(function(){
+                $('.img').remove();
+                show_question();  
+                $('.timer').show();  
+                time = 20; 
+            }, 4000, count_down());
+           // count_down();
         }
+        time = 20;
     }
 
     /*function to reset the game from beginning
@@ -209,9 +224,16 @@ $(function () {
     }*/
 
     var get_image = function () {
-        var quizImage = game[currQuestion].gif
-        $('.image').append('<img> class="image" src=" + quizImage + "></img');
-        $('.timer').empty();
+        if (currQuestion > 0){
+            imgCount = currQuestion + 1;
+        }
+        var quizImage = quiz[imgCount].img;
+        
+       
+        $('.img').show();
+        $('.timer').empty(); 
+        $('.img').append('<img class="image" src=' + quizImage + '></img');
+        console.log('IMG YES');
     }
 
     // calling the timer once before on click for smoother start.

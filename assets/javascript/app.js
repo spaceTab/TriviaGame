@@ -1,12 +1,4 @@
 /*Triva game logic */
-
-/*                To whom it may concern
-* 1. Time often takes a second or two to reload -> unsure why.
-* 2. Do not answer to quickly after time is loaded. can cause it to hang.
-* 3. Spamming answers can also cause the timer to hang.
-* 4. Well pretty much spamming anything seems to cause some issues.
-*    So like they say, patience is a virtue. Give it like 1 second to load
-*    after each ' stage ' & all should be good */
 $(function () {
 
     //var _t = this;
@@ -26,7 +18,7 @@ $(function () {
         }, {
             question: "What was Gandalfs name became Galdaf the White",
             answer: ["Gandalf the Grey", "Laquisha", "Gandalf"],
-            correct: 2,
+            correct: 0,
             img: './assets/images/sassygandalf1.gif'
         }, {
             question: "Where is Frodo from?",
@@ -82,6 +74,8 @@ $(function () {
     $('.answers').hide();
     $('.questions').hide();
     $('.restart').hide();
+    $('.incorrGuess').hide();
+    $('.corrGuess').hide();
 
     //conditional to check if time is started - Sets time.
     var begin_timer = function () {
@@ -114,12 +108,10 @@ $(function () {
         clearInterval(counter);
     }
 
-    //DISREGARD -> Trying to see how to pull from quiz. 
    // console.log(quiz[currQuestion].question);
-
+$('.answer').slideDown("slow");
     //brings up the current question, and it's answer.
     var show_question = function () {
-        //time = 20;
         
         var qQuest = quiz[currQuestion].question;
         var answer = quiz[currQuestion].answer;
@@ -137,9 +129,9 @@ $(function () {
                 addAnswer.text(answer[i]);
                 addAnswer.addClass('button');
                 addAnswer.attr('data-value', i);
-                $('.answer').fadeIn("slow");
                 $('.answer').append(addAnswer);
-                
+                //$('.answer').fadeIn(5000);
+                $('.answer').fadeIn("slow");
             }
         }
     }
@@ -151,6 +143,7 @@ $(function () {
             $('.answer').hide();
             $('.question').hide();
             $('.restart').show();
+            $('.timer').hide();
             $('.correct').html('Correct Answers: ' + correctAns);
             $('.wrong').html('Wrong Answers: ' + incorrectAns);
             $('.unanswered').html('Unanswered: ' + unanswered);
@@ -163,35 +156,41 @@ $(function () {
             currQuestion++;
             incorrectAns++;
             imgCount++;
-            $('.answer').empty();    
-            
+            $('.answer').empty();
+            $('.timer').hide();
+            $('.question').hide();    
+            $('.incorrGuess').show();
             setTimeout(function(){
-                $('#img').remove();
-                show_question();  
-                $('timer').show();
+                $('#img').remove();   
+                $('.timer').show();
+                $('.question').show();
+                $('.incorrGuess').hide();
                 time = 20;
+                show_question(); 
             }, 4000, count_down());
-
-            console.log(currQuestion);  
+            $('.answer').slideUp("slow"); 
             time = 20;
         }
         else {
             console.log('question count: ' + currQuestion); 
             get_image();
-            $('.timer').hide();
             correctAns++;
             currQuestion++;
             imgCount++;
+            $('.timer').hide();
             $('.answer').empty();
             $('.question').hide();
-            
-            setTimeout(function(){
+            $('.corrGuess').show();
+
+            setTimeout(function(){   //function to set time for gif display
                 $('#img').remove();
-                show_question();
                 $('.timer').show();  
-                time = 20; 
                 $('.question').show();
-            }, 4000, count_down());
+                $('.corrGuess').hide();
+                time = 20; 
+                show_question();
+            }, 4500, count_down());
+            $('.answer').slideUp("slow");
         }
     }
 
@@ -207,7 +206,7 @@ $(function () {
     }
 
     // calling the timer once before on click for smoother start.
-    //for start button
+    //for start button to question transition.
     $('.timer').hide();
     setTimeout(count_down, 1);
         

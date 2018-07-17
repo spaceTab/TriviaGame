@@ -221,11 +221,10 @@ $('.answer').slideDown("slow");
         sleep(250).then(() => {
             
            $('.timer').show("fast"); 
-            time = 20;
-            begin_timer();
-            
-            $('.answer').fadeIn("slow");  
+           $('.answer').fadeIn("slow");  
             show_question();
+            begin_timer();
+            time = 20;
         });
     });
 
@@ -239,8 +238,8 @@ $('.answer').slideDown("slow");
 
     $('.restart').on('click', function () {
         //next_round();
-        location.reload();
-    });
+        location.reload();      //hope this is alright to use.
+    });                        //my next round function was wonky. 
 
 
     //JS equivalent to sleep() -- Allowing for smoother animation

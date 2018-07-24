@@ -16,9 +16,9 @@ $(function () {
             correct: 0,
             img:    './assets/images/gollumEars.gif'
         }, {
-            question: "What was Gandalfs name became Galdaf the White",
-            answer: ["Gandalf the Grey", "Laquisha", "Gandalf"],
-            correct: 0,
+            question: "What was Gandalfs name before he became Galdaf the White",
+            answer: ["laquisha", "Gandalf the Grey","Gandalf"],
+            correct: 1,
             img: './assets/images/sassygandalf1.gif'
         }, {
             question: "Where is Frodo from?",
@@ -37,7 +37,7 @@ $(function () {
             img: './assets/images/sarumon1.gif'
         }, {
             question: "Shall I pass?",
-            answer: ["Sure, by all means", "YOU SHALL NOT PASS!"],
+            answer: ["YOU SHALL NOT PASS!","Sure, by all means" ],
             correct: 1,
             img: './assets/images/nopass.gif'
         }, {
@@ -80,7 +80,7 @@ $(function () {
     //conditional to check if time is started - Sets time.
     var begin_timer = function () {
         if (timeStart != true) {
-            counter = setInterval(count_down, 1000);
+            counter = setInterval(count_down, 950);
             timeStart = true;
         }
     };
@@ -91,21 +91,35 @@ $(function () {
         $('.timer').html('<h2> Time Remaining: ' + time + '</h2>');
         time--;
         console.log(time);
+        if (currQuestion + 1 === quiz.length && time == 1) {
+            console.log('IM BEING MET')
+            $('.timer').hide();
+            unanswered++;
+            $('.answer').hide();
+            $('.question').hide();
+            $('.restart').show();
+            $('.correct').html('Correct Answers: ' + correctAns);
+            $('.wrong').html('Wrong Answers: ' + incorrectAns);
+            $('.unanswered').html('Unanswered: ' + unanswered);
+            timer_stop();
+        }
 
-        if (time <= 0) {
+        if (time <= 0 ) {
             $('.answer').empty();
             unanswered++;
             //timer_stop();
-            currQuestion++;
-            show_question();
+            currQuestion++; 
+            
             time = 20;
-        }
+            show_question(); //this is causing a bug I can't fix. Timer doesn't stop @ final question.
+        } 
+        
     };
 
     //clears time interval -> makes changes to HTML   
     var timer_stop = function () {
         !timeStart;
-        clearInterval(counter);
+        clearTimeout(counter);
     }
 
    // console.log(quiz[currQuestion].question);
@@ -117,11 +131,6 @@ $('.answer').slideDown("slow");
         var answer = quiz[currQuestion].answer;
         $('.question').html(qQuest);
 
-        if (currQuestion === quiz.length) {
-            $('.restart').show();
-            reset_game();
-        }
-        else {
             for (var i = 0; i < answer.length; i++) {
                 console.log(answer[i]);
                 //Like to thank Josh for this
@@ -133,13 +142,12 @@ $('.answer').slideDown("slow");
                 //$('.answer').fadeIn(5000);
                 $('.answer').fadeIn("slow");
             }
-        }
     }
 
     //conditional to check if userChoice is of correct/incorrectly
     var check_answer = function () {
         //Had to add + 1, as its count was 1 behind. (due to being post inc? would a preInc have fixed this?)
-        if (currQuestion + 1 === quiz.length) {
+        if (currQuestion + 1 === quiz.length ) {
             $('.answer').hide();
             $('.question').hide();
             $('.restart').show();
@@ -147,8 +155,9 @@ $('.answer').slideDown("slow");
             $('.correct').html('Correct Answers: ' + correctAns);
             $('.wrong').html('Wrong Answers: ' + incorrectAns);
             $('.unanswered').html('Unanswered: ' + unanswered);
-           // reset_game();
+        
            timer_stop();
+
         }
         else if (usrChoice !== correctIndx) {
             get_image();  
@@ -167,13 +176,15 @@ $('.answer').slideDown("slow");
                 $('.incorrGuess').hide();
                 time = 20;
                 show_question(); 
-            }, 4000, count_down());
+            }, 3700, count_down());
             $('.answer').slideUp("slow"); 
             time = 20;
+            console.log(correctIndx);
         }
         else {
             console.log('question count: ' + currQuestion); 
             get_image();
+            correctIndx++;
             correctAns++;
             currQuestion++;
             imgCount++;
@@ -189,8 +200,9 @@ $('.answer').slideDown("slow");
                 $('.corrGuess').hide();
                 time = 20; 
                 show_question();
-            }, 4500, count_down());
+            }, 3700, count_down());
             $('.answer').slideUp("slow");
+            console.log(correctIndx);
         }
     }
 
@@ -199,7 +211,6 @@ $('.answer').slideDown("slow");
 
         var quizImage = quiz[currQuestion].img;
 
-       // $('.img').show();
         $('.timer').empty();  //appends image to div -> dk why had yo use ID's but it worked.
         $('.img').append('<img id="img" src=' + quizImage + '></img');
         console.log('IMG YES');
@@ -216,7 +227,7 @@ $('.answer').slideDown("slow");
        // $('.question').show();
         $('.start-image').fadeOut(200);
         $('.question').slideDown();
-        //$('.answers').show()
+       
         //calling sleep so that when answers pop up, the image is already gone.
         sleep(250).then(() => {
             
@@ -234,6 +245,7 @@ $('.answer').slideDown("slow");
         check_answer();
         console.log(correctIndx);
         console.log(usrChoice);
+        correctIndx = quiz[currQuestion].correct;
     });
 
     $('.restart').on('click', function () {

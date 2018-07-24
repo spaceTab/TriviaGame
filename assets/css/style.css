@@ -11,8 +11,8 @@ body {
     margin: 0px auto;
 
     background: url(../images/shiregandalf.jpeg);
-    background-size: 100%;
-    background-blend-mode: hard-light;
+    background-size: cover;
+   
 }
 
 .container{
